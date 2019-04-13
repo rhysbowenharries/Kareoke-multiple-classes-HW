@@ -7,23 +7,31 @@ require_relative("../room")
 class RoomTest < MiniTest::Test
 
   def setup
-    @room1 = Room.new(10, 5)
-    @room2 = Room.new(15, 15)
-    @room3 = Room.new(20, 0)
+
+    @guest1 = Guests.new("Teressa May", 45, "She Will Be Loved")
+    @guest2 = Guests.new("Jeremy Hunt", 30, "Not A Girl")
+    @guest3 = Guests.new("Borris Johnson", 22, "Champagne Supernova")
+    @guest4 = Guests.new("Tony Blair", 55, "Girls Just Wanna Have Fun")
+
+    @room1 = Room.new(10, [@guest1, @guest2, @guest3])
+    @room2 = Room.new(3, [@guest1, @guest2])
+    @room3 = Room.new(3, [@guest1, @guest2, @guest3])
 
     @song1 = Song.new("Holiday", "Madonna")
     @song2 = Song.new("She Will Be Loved", "Maroon 5")
     @song3 = Song.new("That's Life", "Frank Sinatra")
 
-    @guest1 = Guests.new("Teressa May", 45, "She Will Be Loved")
+
+
+
   end
 
   def test_room_capacity
     assert_equal(10, @room1.capacity)
   end
 
-  def test_number_of_guests
-    assert_equal(15, @room2.number_of_guests)
+  def test_guest_counter
+    assert_equal(3, @room1.guest_counter)
   end
 
   def test_add_song_method
@@ -50,25 +58,30 @@ class RoomTest < MiniTest::Test
 
   end
 
+
   def test_add_guest
-    @room1.add_guest(1)
-    assert_equal(6, @room1.number_of_guests)
+    @room2.add_guest(@guest3)
+    assert_equal(3, @room2.guest_counter)
   end
 
   def test_add_guest__no_room
-    @room2.add_guest(1)
-    assert_equal(15, @room2.number_of_guests)
-    assert_equal("Not Enough Room", @room2.add_guest(1))
+    @room3.add_guest(@guest4)
+    assert_equal(3, @room3.guest_counter)
+    assert_equal("Not Enough Room", @room3.add_guest(@guest4))
   end
 
   def test_remove_guest
-    @room1.remove_guest(2)
-    assert_equal(3, @room1.number_of_guests)
+    @room1.remove_guest(@guest1)
+    assert_equal(2, @room1.guest_counter)
   end
 
-  def test_remove_guest
-    @room1.remove_guest(7)
-    assert_equal(0, @room1.number_of_guests)
-  end  
+  def test_remove_guest__no_such_guest
+    @room2.remove_guest(@guest3)
+  end
+
+  def test_pay_fee
+    assert_equal()
+  end
+
 
 end
