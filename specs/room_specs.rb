@@ -79,9 +79,22 @@ class RoomTest < MiniTest::Test
     @room2.remove_guest(@guest3)
   end
 
-  def test_pay_fee
-    assert_equal()
+
+  # def test_bear(room)_can_take_fish(credit)_from_river(customer)
+  #   @bear.take_fish_from_river(@river)
+  #   assert_equal(1, @bear.number_fishes_in_belly)
+  #   assert_equal(2, @river.number_of_fishes)
+  # end
+  def test_add_to_spend_count
+    @room1.charge_entrance_fee(@guest3)
+    assert_equal(5, @room1.spend_count)
+
   end
 
+  def test_charge_champagne__no_money
+    @room1.charge_entrance_fee(@guest3)
+    @room1.charge_champagne(@guest3)
+    assert_equal(5, @room1.spend_count)
+  end
 
 end

@@ -23,7 +23,37 @@ class GuestsTest < MiniTest::Test
 
 
 
+  # def test_can_supply_fish
+  #   fish = @river.supply_fish
+  #   assert_equal(@fish3.name, fish.name)
+  # end
 
+  def test_can_supply_entrance_fee
+    @guests.supply_entrance_fee
+    assert_equal(40, @guests.credit)
+  end
 
+  # def test_can_supply_product
+  #   @guests.supply_product(@champagne)
+  #   assert_equal(25, @guests.credit)
+  # end
 
+  def test_can_charge_beer
+    @guests.charge_beer
+    assert_equal(41, @guests.credit)
+  end
+
+  def test_charge_champagne
+    @guests.charge_champagne
+    assert_equal(25, @guests.credit)
+  end
+
+  def test_charge_champagne__no_money
+    @guests.supply_entrance_fee
+    @guests.charge_beer
+    @guests.charge_champagne
+    @guests.charge_champagne
+    assert_equal(16, @guests.credit)
+    assert_equal("Insufficient Funds", @guests.charge_champagne )
+  end
 end
